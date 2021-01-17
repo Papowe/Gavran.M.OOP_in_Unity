@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GavranGame
 {
-    public abstract class InteractiveObject
+    public abstract class InteractiveObject : MonoBehaviour
     {
         protected abstract void Interaction();
     }
