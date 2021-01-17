@@ -19,7 +19,7 @@ namespace GavranGame
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.CompareTag("Floor"))
+            if (collision.gameObject.TryGetComponent<Floor>(out Floor floor))
             {
                 _isFloor = true;
             }
@@ -27,7 +27,7 @@ namespace GavranGame
 
         private void OnCollisionExit(Collision collision)
         {
-            if (collision.gameObject.CompareTag("Floor"))
+            if (collision.gameObject.TryGetComponent<Floor>(out Floor floor))
             {
                 _isFloor = false;
             }

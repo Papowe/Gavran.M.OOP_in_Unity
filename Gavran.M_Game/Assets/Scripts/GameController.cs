@@ -5,7 +5,7 @@ namespace GavranGame
 {
     public class GameController : MonoBehaviour
     {
-        private InteractiveObject[] _interactiveObjects;
+        public InteractiveObject[] _interactiveObjects;
 
         private void Awake()
         {
