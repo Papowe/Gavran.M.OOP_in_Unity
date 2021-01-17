@@ -3,7 +3,7 @@ using Random = UnityEngine.Random;
 
 namespace GavranGame
 {
-    public sealed class BadBonus : InteractiveObject, IFlay, IRotation
+    public sealed class BadBonus : InteractiveObject, IFly, IRotation
     {
         private float _lengthFlay;
         private float _speedRotation;
@@ -19,7 +19,7 @@ namespace GavranGame
             //destroy
         }
 
-        public void Flay()
+        public void Fly()
         {
             transform.localPosition = new Vector3(transform.localPosition.x, 
                 Mathf.PingPong(Time.time, _lengthFlay),

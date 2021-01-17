@@ -3,7 +3,7 @@ using Random = UnityEngine.Random;
 
 namespace GavranGame
 {
-    public sealed class GoodBonus : InteractiveObject, IFlay, IFlicker
+    public sealed class GoodBonus : InteractiveObject, IFly, IFlicker
     {
         private Material _material;
         private float _lengthFlay;
@@ -16,10 +16,10 @@ namespace GavranGame
 
         protected override void Interaction()
         {
-           
+           //add bonus
         }
 
-        public void Flay()
+        public void Fly()
         {
             transform.localPosition = new Vector3(transform.localPosition.x, 
                 Mathf.PingPong(Time.time, _lengthFlay),

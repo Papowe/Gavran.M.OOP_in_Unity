@@ -5,7 +5,7 @@ namespace GavranGame
 {
     public class GameController : MonoBehaviour
     {
-        public InteractiveObject[] _interactiveObjects;
+        [SerializeField] private InteractiveObject[] _interactiveObjects;
 
         private void Awake()
         {
@@ -23,9 +23,9 @@ namespace GavranGame
                     continue;
                 }
 
-                if (interactiveObject is IFlay flay)
+                if (interactiveObject is IFly fly)
                 {
-                    flay.Flay();
+                    fly.Fly();
                 }
 
                 if (interactiveObject is IFlicker flicker)

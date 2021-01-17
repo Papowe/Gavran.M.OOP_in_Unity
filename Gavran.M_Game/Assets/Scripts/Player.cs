@@ -22,7 +22,7 @@ namespace GavranGame
 
             Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
 
-            _playerRigidBody.AddForce(movement * _speed * Time.deltaTime);
+            _playerRigidBody.AddForce(movement * (_speed * Time.deltaTime));
         }
 
         protected void Jump()
