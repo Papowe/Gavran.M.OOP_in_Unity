@@ -5,18 +5,20 @@ namespace GavranGame
 {
     public sealed class GoodBonus : InteractiveObject, IFly, IFlicker
     {
+        private DisplayBonuses _displayBonuses;
         private Material _material;
         private float _lengthFlay;
 
         private void Awake()
         {
+            _displayBonuses = new DisplayBonuses();
             _material = GetComponent<Renderer>().material;
             _lengthFlay = Random.Range(1f,5f);
         }
 
         protected override void Interaction()
         {
-           //add bonus
+            _displayBonuses.Display(5);
         }
 
         public void Fly()

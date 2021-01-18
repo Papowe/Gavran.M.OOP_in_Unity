@@ -6,7 +6,7 @@ namespace GavranGame
 {
     public abstract class InteractiveObject : MonoBehaviour, IInteractable
     {
-        public bool isInteractable { get; }
+        public bool isInteractable { get; } = true;
         protected abstract void Interaction();
 
         private void Start()
@@ -19,6 +19,16 @@ namespace GavranGame
             {
                 ((IAction)this).Action();
             }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!isInteractable || !other.CompareTag("Player"))
+            {
+                return;;
+            }
+            Interaction();
+            Destroy(gameObject);
         }
 
         void IAction.Action()
