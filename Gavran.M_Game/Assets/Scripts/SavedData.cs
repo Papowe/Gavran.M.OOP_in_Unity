@@ -1,4 +1,8 @@
-﻿$HEADER$namespace $NAMESPACE$
+﻿namespace GavranGame
 {
-  public class $CLASS$ {$END$}
+    public sealed class SavedData<T>
+    {
+        public int CountBonuses;
+        public T idPlayer = default;
+    }
 }
