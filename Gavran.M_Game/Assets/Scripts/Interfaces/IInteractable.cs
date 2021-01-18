@@ -1,6 +1,8 @@
-﻿namespace GavranGame
+﻿using UnityEngine.PlayerLoop;
+
+namespace GavranGame
 {
-    public interface IInteractable : IAction
+    public interface IInteractable : IAction, IInitialization
     {
         bool isInteractable { get; }
     }

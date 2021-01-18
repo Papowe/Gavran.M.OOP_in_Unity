@@ -7,14 +7,21 @@ namespace GavranGame
     public abstract class InteractiveObject : MonoBehaviour, IInteractable
     {
         public bool isInteractable { get; }
+        protected abstract void Interaction();
 
         private void Start()
         {
-            Action();
+            if (this is BadBonus)
+            {
+                ((IInitialization)this).Action();
+            }
+            if (this is GoodBonus)
+            {
+                ((IAction)this).Action();
+            }
         }
 
-        protected abstract void Interaction();
-        public void Action()
+        void IAction.Action()
         {
             if (TryGetComponent(out Renderer renderer))
             {
@@ -22,5 +29,12 @@ namespace GavranGame
             }
         }
 
+        void IInitialization.Action()
+        {
+            if (TryGetComponent(out Renderer renderer))
+            {
+                renderer.material.color = Color.red;;
+            }
+        }
     }
 }
