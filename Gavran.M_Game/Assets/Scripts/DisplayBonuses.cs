@@ -6,7 +6,7 @@ namespace GavranGame
 {
     public sealed class DisplayBonuses
     {
-        private Text _text;
+        private static Text _text;
 
         public DisplayBonuses()
         {

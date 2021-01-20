@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using static UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
 namespace GavranGame
@@ -22,6 +23,7 @@ namespace GavranGame
         protected override void Interaction()
         {
             _displayBonuses.Display(_point);
+            Log("I get a bonus");
         }
 
         public void Fly()
