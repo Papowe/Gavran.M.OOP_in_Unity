@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace GavranGame
 {
-    public sealed class GoodBonus : InteractiveObject, IFly, IFlicker
+    public sealed class GoodBonus : InteractiveObject, IFly, IFlicker, ICloneable, IEquatable<GoodBonus>
     {
+        public int _point;
         private DisplayBonuses _displayBonuses;
         private Material _material;
         private float _lengthFlay;
@@ -14,11 +16,12 @@ namespace GavranGame
             _displayBonuses = new DisplayBonuses();
             _material = GetComponent<Renderer>().material;
             _lengthFlay = Random.Range(1f,5f);
+            _point = Random.Range(1, 5);
         }
 
         protected override void Interaction()
         {
-            _displayBonuses.Display(5);
+            _displayBonuses.Display(_point);
         }
 
         public void Fly()
@@ -32,6 +35,17 @@ namespace GavranGame
         {
             _material.color = new Color(_material.color.r, _material.color.g, _material.color.b,
                 Mathf.PingPong(Time.time, 1f));
+        }
+
+        public object Clone()
+        {
+            var cloneGameObject = Instantiate(gameObject, transform.position, transform.rotation, transform.parent);
+            return cloneGameObject;
+        }
+
+        public bool Equals(GoodBonus other)
+        {
+            return _point == other._point;
         }
     }
 }

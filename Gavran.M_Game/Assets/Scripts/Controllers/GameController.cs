@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GavranGame
 {
-    public class GameController : MonoBehaviour
+    public class GameController : MonoBehaviour, IDisposable
     {
         [SerializeField] private InteractiveObject[] _interactiveObjects;
 
@@ -37,6 +37,14 @@ namespace GavranGame
                 {
                     rotation.Rotation();
                 }
+            }
+        }
+
+        public void Dispose()
+        {
+            foreach (var o in _interactiveObjects)
+            {
+                Destroy(o.gameObject);
             }
         }
     }

@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 namespace GavranGame
 {
-    public abstract class InteractiveObject : MonoBehaviour, IInteractable
+    public abstract class InteractiveObject : MonoBehaviour, IInteractable, IComparable<InteractiveObject>
     {
         public bool isInteractable { get; } = true;
         protected abstract void Interaction();
@@ -45,6 +45,11 @@ namespace GavranGame
             {
                 renderer.material.color = Color.red;;
             }
+        }
+
+        public int CompareTo(InteractiveObject other)
+        {
+            return name.CompareTo(other.name);
         }
     }
 }

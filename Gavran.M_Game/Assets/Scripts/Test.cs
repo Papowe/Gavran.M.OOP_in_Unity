@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 namespace GavranGame
@@ -7,11 +8,11 @@ namespace GavranGame
     {
         private void Start()
         {
-            var savedData = new SavedData<Guid>();
-            savedData.idPlayer = new Guid();
-
-            var savedDataExample = new SavedData<string>();
-            savedDataExample.idPlayer = "name_554";
+            var listInteractableObject = new  ListInteractableObject();
+            for (int i = 0; i < listInteractableObject.Count; i++)
+            {
+                print(listInteractableObject[i]);
+            }
         }
     }
 }

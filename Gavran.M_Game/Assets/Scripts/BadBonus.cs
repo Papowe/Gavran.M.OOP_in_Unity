@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace GavranGame
 {
-    public sealed class BadBonus : InteractiveObject, IFly, IRotation
+    public sealed class BadBonus : InteractiveObject, IFly, IRotation, ICloneable
     {
         private float _lengthFlay;
         private float _speedRotation;
@@ -29,6 +30,12 @@ namespace GavranGame
         public void Rotation()
         {
             transform.Rotate(Vector3.up * (Time.deltaTime * _speedRotation),Space.World);        
+        }
+
+        public object Clone()
+        {
+            var cloneGameObject = Instantiate(gameObject, transform.position, transform.rotation, transform.parent);
+            return cloneGameObject;
         }
     }
 }
