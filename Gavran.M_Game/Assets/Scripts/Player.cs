@@ -17,8 +17,8 @@ namespace GavranGame
 
         protected void Move()
         {
-            float moveHorizontal = Input.GetAxis("Horizontal");
-            float moveVertical = Input.GetAxis("Vertical");
+            float moveHorizontal = Input.GetAxis(AxisManager.HORIZONTAL);
+            float moveVertical = Input.GetAxis(AxisManager.VERTICAL);
 
             Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
 

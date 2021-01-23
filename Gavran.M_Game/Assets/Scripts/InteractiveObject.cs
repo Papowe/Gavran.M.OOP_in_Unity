@@ -24,7 +24,7 @@ namespace GavranGame
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!isInteractable || !other.CompareTag("Player")) { return; }
+            if (!isInteractable || !other.TryGetComponent<Player>(out Player player)) { return; }
             Interaction();
             OnInteraction(this);
             Destroy(gameObject);
