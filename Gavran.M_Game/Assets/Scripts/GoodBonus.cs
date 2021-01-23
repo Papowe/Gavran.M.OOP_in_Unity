@@ -19,7 +19,7 @@ namespace GavranGame
             _lengthFlay = Random.Range(1f,5f);
             _point = Random.Range(1, 5);
         }
-
+        
         protected override void Interaction()
         {
             _displayBonuses.Display(_point);

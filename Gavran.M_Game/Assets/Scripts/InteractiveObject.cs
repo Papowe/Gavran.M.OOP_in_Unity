@@ -8,6 +8,7 @@ namespace GavranGame
     {
         public bool isInteractable { get; } = true;
         protected abstract void Interaction();
+        public Action<InteractiveObject> OnInteraction;
 
         private void Start()
         {
@@ -23,11 +24,9 @@ namespace GavranGame
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!isInteractable || !other.CompareTag("Player"))
-            {
-                return;;
-            }
+            if (!isInteractable || !other.CompareTag("Player")) { return; }
             Interaction();
+            OnInteraction(this);
             Destroy(gameObject);
         }
 

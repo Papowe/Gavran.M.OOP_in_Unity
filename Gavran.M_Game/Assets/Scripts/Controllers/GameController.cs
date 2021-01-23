@@ -1,20 +1,37 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace GavranGame
 {
-    public class GameController : MonoBehaviour, IDisposable
+    public sealed class GameController : MonoBehaviour, IDisposable
     {
-        [SerializeField] private InteractiveObject[] _interactiveObjects;
+        [SerializeField] private List<InteractiveObject> _interactiveObjects;
+        
 
         private void Awake()
         {
-            _interactiveObjects = FindObjectsOfType<InteractiveObject>();
+            _interactiveObjects = FindObjectsOfType<InteractiveObject>().ToList();
+            
+            foreach (var item in _interactiveObjects)
+            {
+                item.OnInteraction = o =>
+                {
+                    var goodBonus = o as GoodBonus;
+                    
+                    if (goodBonus != null)
+                    {
+                        TryRemoveBonus(goodBonus);
+                    }
+                };
+            }
         }
 
         private void Update()
         {
-            for (int i = 0; i < _interactiveObjects.Length; i++)
+            for (int i = 0; i < _interactiveObjects.Count; i++)
             {
                 var interactiveObject = _interactiveObjects[i];
 
@@ -47,5 +64,20 @@ namespace GavranGame
                 Destroy(o.gameObject);
             }
         }
+        
+        public void TryRemoveBonus(GoodBonus obj)
+        {
+            if (_interactiveObjects.Contains(obj))
+            {
+                _interactiveObjects.Remove(obj);
+            }
+
+            if (!_interactiveObjects.Any(x => x is GoodBonus))
+            {
+                Debug.Log("Выиграли");
+            }
+        }
     }
+    
+    
 }

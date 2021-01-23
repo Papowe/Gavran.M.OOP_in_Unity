@@ -10,11 +10,14 @@ namespace GavranGame
 
         private void Update()
         {
-            if (_isFloor)
-            {
-                Move();
-                Jump();
-            }
+            if (!_isFloor) return;
+            Jump();
+        }
+
+        private void FixedUpdate()
+        {
+            if (!_isFloor) return;
+            Move();
         }
 
         private void OnCollisionEnter(Collision collision)
@@ -32,6 +35,8 @@ namespace GavranGame
                 _isFloor = false;
             }
         }
+
+       
     }
 }
 
