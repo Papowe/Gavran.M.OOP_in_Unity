@@ -9,6 +9,10 @@ namespace GavranGame
         private float _lengthFlay;
         private float _speedRotation;
 
+        public delegate void CaughtPlayerChange();
+
+        public CaughtPlayerChange CaughtPlayer;
+
         private void Awake()
         {
             _lengthFlay = Random.Range(1f, 5f);
@@ -17,7 +21,7 @@ namespace GavranGame
 
         protected override void Interaction()
         {
-            //destroy
+            CaughtPlayer?.Invoke();
         }
 
         public void Fly()

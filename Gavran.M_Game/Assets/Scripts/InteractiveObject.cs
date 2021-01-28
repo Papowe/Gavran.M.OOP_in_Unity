@@ -7,8 +7,8 @@ namespace GavranGame
     public abstract class InteractiveObject : MonoBehaviour, IInteractable, IComparable<InteractiveObject>
     {
         public bool isInteractable { get; } = true;
-        protected abstract void Interaction();
-        public Action<InteractiveObject> OnInteraction;
+        protected abstract void Interaction(); 
+        //public Action<InteractiveObject> OnInteraction;
 
         private void Start()
         {
@@ -26,7 +26,7 @@ namespace GavranGame
         {
             if (!isInteractable || !other.TryGetComponent<Player>(out Player player)) { return; }
             Interaction();
-            OnInteraction(this);
+            //OnInteraction(this);
             Destroy(gameObject);
         }
 

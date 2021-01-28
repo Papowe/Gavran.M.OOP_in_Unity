@@ -10,7 +10,7 @@ namespace GavranGame
 
         public DisplayBonuses()
         {
-            _text = Object.FindObjectOfType<Text>();
+            //_text = Object.FindObjectOfType<Text>();
         }
 
         public void Display(int value)
