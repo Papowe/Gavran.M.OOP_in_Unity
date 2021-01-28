@@ -10,7 +10,7 @@ namespace GavranGame
 
         private void Start()
         {
-            _player = GameObject.FindObjectOfType<Player>();
+            _player = FindObjectOfType<Player>();
             _offset = transform.position - _player.transform.position;
         }
 

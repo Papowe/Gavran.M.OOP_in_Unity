@@ -7,7 +7,7 @@ namespace GavranGame
     {
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (other.gameObject.TryGetComponent<Player>(out  Player player))
             {
                 SceneManager.LoadScene(0);
             }

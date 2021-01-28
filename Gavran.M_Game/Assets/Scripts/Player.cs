@@ -5,7 +5,7 @@ namespace GavranGame
 {
     public class Player : MonoBehaviour
     {
-        [SerializeField] private float _speed = 200f;
+        [SerializeField] private float _speed = 5;
         [SerializeField] private float _jumpForce = 4f;
 
         private Rigidbody _playerRigidBody;
@@ -17,12 +17,12 @@ namespace GavranGame
 
         protected void Move()
         {
-            float moveHorizontal = Input.GetAxis("Horizontal");
-            float moveVertical = Input.GetAxis("Vertical");
+            float moveHorizontal = Input.GetAxis(AxisManager.HORIZONTAL);
+            float moveVertical = Input.GetAxis(AxisManager.VERTICAL);
 
             Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
 
-            _playerRigidBody.AddForce(movement * _speed * Time.deltaTime);
+            _playerRigidBody.AddForce(movement * _speed);
         }
 
         protected void Jump()
