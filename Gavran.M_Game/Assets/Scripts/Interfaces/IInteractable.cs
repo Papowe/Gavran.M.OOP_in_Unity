@@ -2,7 +2,7 @@
 
 namespace GavranGame
 {
-    public interface IInteractable : IAction, IInitialization
+    public interface IInteractable : IAction
     {
         bool isInteractable { get; }
     }

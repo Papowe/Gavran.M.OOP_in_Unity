@@ -44,7 +44,7 @@ namespace GavranGame
             }
         }
 
-        private void CaugthPlayer()
+        private void CaugthPlayer(object o, CaughtPlayerEventArgs args)
         {
             Time.timeScale = 0;
         }
@@ -83,7 +83,6 @@ namespace GavranGame
             {
                 if (o is InteractiveObject interactiveObject)
                 {
-                    Destroy(interactiveObject.gameObject);
                     if (o is BadBonus badBonus)
                     {
                         badBonus.CaughtPlayer -= CaugthPlayer;
@@ -106,6 +105,4 @@ namespace GavranGame
         //     }
         // }
     }
-    
-    
 }

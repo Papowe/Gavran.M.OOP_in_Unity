@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace GavranGame
 {
@@ -8,7 +9,7 @@ namespace GavranGame
         
         public  sealed class Source
         {
-            private MyDelegate _function;
+            private event MyDelegate _function;
             
             public void Add(MyDelegate f) // Метод для підписки методів на делегат
             {
@@ -23,10 +24,7 @@ namespace GavranGame
             public void Run()
             {
                 Debug.Log("Runs!");
-                if (_function != null)
-                {
-                    _function(this);
-                }
+                _function?.Invoke(this);
             }
         }
         

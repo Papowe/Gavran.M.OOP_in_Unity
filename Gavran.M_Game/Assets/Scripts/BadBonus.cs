@@ -9,9 +9,14 @@ namespace GavranGame
         private float _lengthFlay;
         private float _speedRotation;
 
-        public delegate void CaughtPlayerChange();
+        //public delegate void CaughtPlayerChange(object value);
 
-        public CaughtPlayerChange CaughtPlayer;
+        private event EventHandler<CaughtPlayerEventArgs> _сaughtPlayer;
+        public event EventHandler<CaughtPlayerEventArgs> CaughtPlayer
+        {
+            add { _сaughtPlayer += value; }
+            remove { _сaughtPlayer += value; }
+        }
 
         private void Awake()
         {
@@ -21,7 +26,7 @@ namespace GavranGame
 
         protected override void Interaction()
         {
-            CaughtPlayer?.Invoke();
+            _сaughtPlayer?.Invoke(this, new CaughtPlayerEventArgs(_color));
         }
 
         public void Fly()

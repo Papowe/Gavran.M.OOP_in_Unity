@@ -15,7 +15,7 @@ namespace GavranGame
 
         public void Display(int value)
         {
-            _text.text = $"Вы набрали {value}";
+           // _text.text = $"Вы набрали {value}";
         }
     }
 }

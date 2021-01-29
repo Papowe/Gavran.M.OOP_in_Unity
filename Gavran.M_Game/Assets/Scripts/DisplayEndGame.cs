@@ -1,5 +1,7 @@
 ﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace GavranGame
 {
@@ -13,9 +15,9 @@ namespace GavranGame
             _finishGameLabel.text = String.Empty;
         }
 
-        public void GameOver()
+        public void GameOver(object o, CaughtPlayerEventArgs args)
         {
-            _finishGameLabel.text = "Вы проиграли";
+            _finishGameLabel.text = $"Вы проиграли. Вас убил {((BadBonus)o)?.name} {args.Color} цвета";
         }
     }
 }
