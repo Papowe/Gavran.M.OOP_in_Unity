@@ -8,9 +8,6 @@ namespace GavranGame
     {
         private float _lengthFlay;
         private float _speedRotation;
-
-        //public delegate void CaughtPlayerChange(object value);
-
         private event EventHandler<CaughtPlayerEventArgs> _сaughtPlayer;
         public event EventHandler<CaughtPlayerEventArgs> CaughtPlayer
         {
