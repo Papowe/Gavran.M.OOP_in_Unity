@@ -4,17 +4,12 @@ using Random = UnityEngine.Random;
 
 namespace GavranGame
 {
-    public sealed class BadBonus : InteractiveObject, IFly, IRotation, ICloneable
+    public sealed class BadBonus : InteractiveObject, IFly, IRotation
     {
+        public Action<string, Color> OnCaughtPlayerChange = delegate(string s, Color color) {  };
         private float _lengthFlay;
         private float _speedRotation;
-        private event EventHandler<CaughtPlayerEventArgs> _сaughtPlayer;
-        public event EventHandler<CaughtPlayerEventArgs> CaughtPlayer
-        {
-            add { _сaughtPlayer += value; }
-            remove { _сaughtPlayer += value; }
-        }
-
+        
         private void Awake()
         {
             _lengthFlay = Random.Range(1f, 5f);
@@ -23,7 +18,14 @@ namespace GavranGame
 
         protected override void Interaction()
         {
-            _сaughtPlayer?.Invoke(this, new CaughtPlayerEventArgs(_color));
+            OnCaughtPlayerChange?.Invoke(gameObject.name, _color);
+        }
+
+        public override void Execute()
+        {
+            if(!IsInteractable) return;
+            Fly();
+            Rotation();
         }
 
         public void Fly()
@@ -36,12 +38,6 @@ namespace GavranGame
         public void Rotation()
         {
             transform.Rotate(Vector3.up * (Time.deltaTime * _speedRotation),Space.World);        
-        }
-
-        public object Clone()
-        {
-            var cloneGameObject = Instantiate(gameObject, transform.position, transform.rotation, transform.parent);
-            return cloneGameObject;
         }
     }
 }

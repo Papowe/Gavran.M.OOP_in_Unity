@@ -9,15 +9,15 @@ namespace GavranGame
     {
         private Text _finishGameLabel;
 
-        public DisplayEndGame(Text finishGameLable)
+        public DisplayEndGame(GameObject endGame)
         {
-            _finishGameLabel = finishGameLable;
+            _finishGameLabel = endGame.GetComponentInChildren<Text>();
             _finishGameLabel.text = String.Empty;
         }
 
-        public void GameOver(object o, CaughtPlayerEventArgs args)
+        public void GameOver(string name, Color color)
         {
-            _finishGameLabel.text = $"Вы проиграли. Вас убил {((BadBonus)o)?.name} {args.Color} цвета";
+            _finishGameLabel.text = $"Вы проиграли, вас убил {name}, {color} цвета";
         }
     }
 }

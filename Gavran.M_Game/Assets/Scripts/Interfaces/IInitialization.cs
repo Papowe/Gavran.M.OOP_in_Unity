@@ -1,6 +1,6 @@
 ﻿namespace GavranGame
 {
-    public interface IAction
+    public interface IInitialization
     {
         void Action();
     }

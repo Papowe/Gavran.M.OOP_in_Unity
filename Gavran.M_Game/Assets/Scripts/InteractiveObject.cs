@@ -4,33 +4,35 @@ using Random = UnityEngine.Random;
 
 namespace GavranGame
 {
-    public abstract class InteractiveObject : MonoBehaviour, IInteractable, IComparable<InteractiveObject>
+    public abstract class InteractiveObject : MonoBehaviour, IExecute
     {
         protected Color _color;
-        public bool isInteractable { get; } = true;
-        protected abstract void Interaction(); 
-        //public Action<InteractiveObject> OnInteraction;
+        private bool _isInteractable;
 
-        private void Start()
+        public bool IsInteractable
         {
-            Action();
+            get { return _isInteractable; }
+            private set
+            {
+                _isInteractable = value;
+                GetComponent<Renderer>().enabled = _isInteractable;
+                GetComponent<Collider>().enabled = _isInteractable;
+            }
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!isInteractable || !other.TryGetComponent<Player>(out Player player)) { return; }
+            if (!IsInteractable || !other.TryGetComponent(out PlayerBase player)) { return; }
             Interaction();
-            //OnInteraction(this);
-            Destroy(gameObject);
+            IsInteractable = false;
         }
 
-        public int CompareTo(InteractiveObject other)
-        {
-            return name.CompareTo(other.name);
-        }
+        protected abstract void Interaction();
+        public abstract void Execute();
 
-        public void Action()
+        private void Start()
         {
+            IsInteractable = true;
             _color = Random.ColorHSV(0f,1f,1f,1f,1f,1f);
             if (TryGetComponent(out Renderer renderer))
             {

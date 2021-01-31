@@ -1,21 +1,24 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.UI;
+using Color = UnityEngine.Color;
 
 namespace GavranGame
 {
     public sealed class DisplayBonuses
     {
-        private static Text _text;
+        private Text _bonuseLable;
 
-        public DisplayBonuses()
+        public DisplayBonuses(GameObject bonus)
         {
-            //_text = Object.FindObjectOfType<Text>();
+            _bonuseLable = bonus.GetComponentInChildren<Text>();
+            _bonuseLable.text = String.Empty;
         }
 
         public void Display(int value)
         {
-           // _text.text = $"Вы набрали {value}";
+            _bonuseLable.text = $"Вы набрали {value}";
         }
     }
 }

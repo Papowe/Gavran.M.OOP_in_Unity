@@ -9,100 +9,102 @@ namespace GavranGame
 {
     public sealed class GameController : MonoBehaviour, IDisposable
     {
-        public Text _finishGameLable;
-        private DisplayEndGame _displayEndGame;
-        //[SerializeField] private List<InteractiveObject> _interactiveObjects;
-        private ListInteractableObject _interactiveObjects;
-        
+        public PlayerType PlayerType = PlayerType.Ball;
+       private ListExecuteObject _interactiveObject;
+       private DisplayEndGame _displayEndGame;
+       private DisplayBonuses _displayBonuses;
+       private Refeerence _refeerence;
+       private CameraController _cameraController;
+       private InputController _inputController;
+       private int _countBonuses;
 
-        private void Awake()
-        {
-            // _interactiveObjects = FindObjectsOfType<InteractiveObject>().ToList();
-            //
-            // foreach (var item in _interactiveObjects)
-            // {
-            //     item.OnInteraction = o =>
-            //     {
-            //         var goodBonus = o as GoodBonus;
-            //         
-            //         if (goodBonus != null)
-            //         {
-            //             TryRemoveBonus(goodBonus);
-            //         }
-            //     };
-            // }
+       private void Awake()
+       {
+           _refeerence = new Refeerence();
+           _interactiveObject = new ListExecuteObject();
+           _displayEndGame = new DisplayEndGame(_refeerence.EndGame);
+           _displayBonuses = new DisplayBonuses(_refeerence.Bonuse);
 
-            _interactiveObjects = new ListInteractableObject();
-            _displayEndGame = new DisplayEndGame(_finishGameLable);
-            foreach (var o in _interactiveObjects)
-            {
-                if (o is BadBonus badBonus)
-                {
-                    badBonus.CaughtPlayer += CaugthPlayer;
-                    badBonus.CaughtPlayer += _displayEndGame.GameOver;
-                }
-            }
-        }
+           PlayerBase player = null;
+           if (PlayerType == PlayerType.Ball)
+           {
+               player = _refeerence.PlayerBall;
+           }
 
-        private void CaugthPlayer(object o, CaughtPlayerEventArgs args)
-        {
-            Time.timeScale = 0;
-        }
+           _cameraController = new CameraController(player.transform,_refeerence.MainCamera.transform);
+           _interactiveObject.AddExecuteObject(_cameraController);
 
-        private void Update()
-        {
-            for (int i = 0; i < _interactiveObjects.Count; i++)
-            {
-                var interactiveObject = _interactiveObjects[i];
+           if (Application.platform == RuntimePlatform.WindowsEditor)
+           {
+               _inputController = new InputController(player);
+               _interactiveObject.AddExecuteObject(_inputController);
+           }
 
-                if (interactiveObject == null)
-                {
-                    continue;
-                }
+           foreach (var o in _interactiveObject)
+           {
+               if (o is BadBonus badBonus)
+               {
+                   badBonus.OnCaughtPlayerChange += CaughtPlayer;
+                   badBonus.OnCaughtPlayerChange += _displayEndGame.GameOver;
+               }
 
-                if (interactiveObject is IFly fly)
-                {
-                    fly.Fly();
-                }
+               if (o is GoodBonus goodBonus)
+               {
+                   goodBonus.OnPointChange += AddBonuse;
+               }
+           }
+           
+           _refeerence.RestartButton.onClick.AddListener(RestartGame);
+           _refeerence.RestartButton.gameObject.SetActive(false);
+       }
 
-                if (interactiveObject is IFlicker flicker)
-                {
-                    flicker.Flicker();
-                }
+       private void RestartGame()
+       {
+           SceneManager.LoadScene(0);
+           Time.timeScale = 1;
+       }
+       
+       private void CaughtPlayer(string value, Color args)
+       {
+           _refeerence.RestartButton.gameObject.SetActive(true);
+           Time.timeScale = 0;
+       }
 
-                if (interactiveObject is IRotation rotation)
-                {
-                    rotation.Rotation();
-                }
-            }
-        }
+       private void AddBonuse(int value)
+       {
+           _countBonuses += value;
+           _displayBonuses.Display(_countBonuses);
+       }
 
-        public void Dispose()
-        {
-            foreach (var o in _interactiveObjects)
-            {
-                if (o is InteractiveObject interactiveObject)
-                {
-                    if (o is BadBonus badBonus)
-                    {
-                        badBonus.CaughtPlayer -= CaugthPlayer;
-                        badBonus.CaughtPlayer -= _displayEndGame.GameOver;
-                    }
-                }
-            }
-        }
-        
-        // public void TryRemoveBonus(GoodBonus obj)
-        // {
-        //     if (_interactiveObjects.Contains(obj))
-        //     {
-        //         _interactiveObjects.Remove(obj);
-        //     }
-        //
-        //     if (!_interactiveObjects.Any(x => x is GoodBonus))
-        //     {
-        //         Debug.Log("Выиграли");
-        //     }
-        // }
+       private void Update()
+       {
+           for (int i = 0; i < _interactiveObject.Length; i++)
+           {
+               var interactiveObject = _interactiveObject[i];
+
+               if (interactiveObject == null)
+               {
+                   continue;
+               }
+               interactiveObject.Execute();
+           }
+       }
+
+       public void Dispose()
+       {
+           foreach (var o in _interactiveObject)
+           {
+               switch (o)
+               {
+                   case BadBonus badBonus:
+                       badBonus.OnCaughtPlayerChange -= CaughtPlayer;
+                       badBonus.OnCaughtPlayerChange -= _displayEndGame.GameOver;
+                       break;
+                   case GoodBonus goodBonus:
+                       goodBonus.OnPointChange -= AddBonuse;
+                       break;
+               }
+           }
+       }
     }
 }
