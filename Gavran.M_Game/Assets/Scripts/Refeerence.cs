@@ -9,6 +9,7 @@ namespace GavranGame
         private Camera _mainCamera;
         private GameObject _bonuse;
         private GameObject _endGame;
+        private GameObject _winGame;
         private Canvas _canvas;
         private Button _restartButton;
         
@@ -85,6 +86,20 @@ namespace GavranGame
                     _restartButton = Object.Instantiate(gameObject, Canvas.transform);
                 }
                 return _restartButton;
+            }
+        }
+
+        public GameObject WinGame
+        {
+            get
+            {
+                if (_winGame == null)
+                {
+                    var gameObject = Resources.Load<GameObject>("UI/WinGame");
+                    _winGame = Object.Instantiate(gameObject, Canvas.transform);
+                }
+
+                return _winGame;
             }
         }
     }

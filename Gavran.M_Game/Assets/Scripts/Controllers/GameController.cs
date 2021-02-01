@@ -12,17 +12,21 @@ namespace GavranGame
         public PlayerType PlayerType = PlayerType.Ball;
        private ListExecuteObject _interactiveObject;
        private DisplayEndGame _displayEndGame;
+       private DisplayWinGame _displayWinGame;
        private DisplayBonuses _displayBonuses;
        private Refeerence _refeerence;
        private CameraController _cameraController;
        private InputController _inputController;
+       private ListGoodBonuses _listGoodBonuses;
        private int _countBonuses;
 
        private void Awake()
        {
            _refeerence = new Refeerence();
            _interactiveObject = new ListExecuteObject();
+           _listGoodBonuses = new ListGoodBonuses(_interactiveObject);
            _displayEndGame = new DisplayEndGame(_refeerence.EndGame);
+           _displayWinGame = new DisplayWinGame(_refeerence.WinGame, _refeerence.RestartButton);
            _displayBonuses = new DisplayBonuses(_refeerence.Bonuse);
 
            PlayerBase player = null;
@@ -53,6 +57,8 @@ namespace GavranGame
                    goodBonus.OnPointChange += AddBonuse;
                }
            }
+
+           _listGoodBonuses.BonusesCollected += _displayWinGame.WinPanel;
            
            _refeerence.RestartButton.onClick.AddListener(RestartGame);
            _refeerence.RestartButton.gameObject.SetActive(false);
@@ -74,6 +80,7 @@ namespace GavranGame
        {
            _countBonuses += value;
            _displayBonuses.Display(_countBonuses);
+           _listGoodBonuses.CaughtBonus();
        }
 
        private void Update()
@@ -105,6 +112,8 @@ namespace GavranGame
                        break;
                }
            }
+           
+           _listGoodBonuses.BonusesCollected -= _displayWinGame.WinPanel;
        }
     }
 }
