@@ -10,12 +10,13 @@ namespace GavranGame
         public int Point;
         public Action<int> OnPointChange = delegate(int i) {  };
         private Material _material;
-        private float _lengthFlay;
+        private float _lengthFly;
 
         private void Awake()
         {
+            Point = Random.Range(1, 5);
             _material = GetComponent<Renderer>().material;
-            _lengthFlay = Random.Range(1f, 5f);
+            _lengthFly = Random.Range(1f, 5f);
         }
         
         protected override void Interaction()
@@ -33,7 +34,7 @@ namespace GavranGame
         public void Fly()
         {
             transform.localPosition = new Vector3(transform.localPosition.x, 
-                Mathf.PingPong(Time.time, _lengthFlay),
+                Mathf.PingPong(Time.time, _lengthFly),
                 transform.localPosition.z);
         }
 
