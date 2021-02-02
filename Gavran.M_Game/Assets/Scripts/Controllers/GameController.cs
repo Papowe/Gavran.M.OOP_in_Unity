@@ -18,6 +18,8 @@ namespace GavranGame
        private CameraController _cameraController;
        private InputController _inputController;
        private ListGoodBonuses _listGoodBonuses;
+       private BafController _bafController;
+       PlayerBase _player = null;
        private int _countBonuses;
 
        private void Awake()
@@ -28,19 +30,19 @@ namespace GavranGame
            _displayEndGame = new DisplayEndGame(_refeerence.EndGame);
            _displayWinGame = new DisplayWinGame(_refeerence.WinGame, _refeerence.RestartButton);
            _displayBonuses = new DisplayBonuses(_refeerence.Bonuse);
-
-           PlayerBase player = null;
+           _bafController = new BafController();
+           
            if (PlayerType == PlayerType.Ball)
            {
-               player = _refeerence.PlayerBall;
+               _player = _refeerence.PlayerBall;
            }
 
-           _cameraController = new CameraController(player.transform,_refeerence.MainCamera.transform);
+           _cameraController = new CameraController(_player.transform,_refeerence.MainCamera.transform);
            _interactiveObject.AddExecuteObject(_cameraController);
 
            if (Application.platform == RuntimePlatform.WindowsEditor)
            {
-               _inputController = new InputController(player);
+               _inputController = new InputController(_player);
                _interactiveObject.AddExecuteObject(_inputController);
            }
 
@@ -77,7 +79,8 @@ namespace GavranGame
        }
 
        private void AddBonuse(int value)
-       {
+       {    
+           _bafController.RabdomBaf.Baf(_player);
            _countBonuses += value;
            _displayBonuses.Display(_countBonuses);
            _listGoodBonuses.CaughtBonus();
