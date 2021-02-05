@@ -11,7 +11,7 @@ namespace GavranGame
         public void Baf(PlayerBase playerBase)
         {
             _curentSpeed = playerBase.Speed;
-            playerBase.Speed = 20f;
+            playerBase.Speed = 10f;
         }
 
         // IEnumerator TimeSpeed(PlayerBase playerBase)

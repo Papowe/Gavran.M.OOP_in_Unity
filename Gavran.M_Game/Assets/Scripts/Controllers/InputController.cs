@@ -13,6 +13,7 @@ namespace GavranGame
 
         public void Execute()
         {
+            if(!_playerBase.isFloor) return;
             _playerBase.Move(Input.GetAxis(AxisManager.HORIZONTAL), 0,Input.GetAxis(AxisManager.VERTICAL));
         }
     }

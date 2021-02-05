@@ -19,6 +19,7 @@ namespace GavranGame
        private InputController _inputController;
        private ListGoodBonuses _listGoodBonuses;
        private BafController _bafController;
+       private PositionController _positionController;
        PlayerBase _player = null;
        private int _countBonuses;
 
@@ -36,7 +37,11 @@ namespace GavranGame
            {
                _player = _refeerence.PlayerBall;
            }
-
+            
+           _positionController = new PositionController(_player);
+           _interactiveObject.AddExecuteObject(_positionController);
+           _positionController.OutsideMap += RestartGame;
+           
            _cameraController = new CameraController(_player.transform,_refeerence.MainCamera.transform);
            _interactiveObject.AddExecuteObject(_cameraController);
 
@@ -116,6 +121,7 @@ namespace GavranGame
                }
            }
            
+           _positionController.OutsideMap += RestartGame;
            _listGoodBonuses.BonusesCollected -= _displayWinGame.WinPanel;
        }
     }
