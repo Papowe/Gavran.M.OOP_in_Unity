@@ -9,6 +9,7 @@ namespace GavranGame
     {
         public int Point;
         public Action<int> OnPointChange = delegate(int i) {  };
+        public Action  ShakingCamera = delegate {  };
         private Material _material;
         private float _lengthFly;
 
@@ -21,7 +22,8 @@ namespace GavranGame
         
         protected override void Interaction()
         {
-           OnPointChange?.Invoke(Point);
+            ShakingCamera();
+            OnPointChange(Point);
         }
 
         public override void Execute()
