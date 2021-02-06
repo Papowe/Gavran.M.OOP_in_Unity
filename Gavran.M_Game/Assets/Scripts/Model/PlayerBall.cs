@@ -17,6 +17,18 @@ namespace GavranGame
         {
             _rigidbody.AddForce(new Vector3(x, y, z) * Speed);
         }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if(!other.gameObject.TryGetComponent(out Floor floor)) return;
+            isFloor = true;
+        }
+
+        private void OnCollisionExit(Collision other)
+        {
+            if(!other.gameObject.TryGetComponent(out Floor floor)) return;
+            isFloor = false;
+        }
     }
 }
 
