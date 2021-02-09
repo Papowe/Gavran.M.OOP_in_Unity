@@ -9,7 +9,12 @@ namespace GavranGame
     {
         private void Start()
         {
+            // PhotoController _photoController = new PhotoController();
             
+            // StartCoroutine(_photoController.DoTapExampleAsync());
+            // _photoController.FirstMethod();
+            
+            ///////// Результат двух скриншотов в папке daraSave ////////////
         }
     }
 }
