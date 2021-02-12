@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GavranGame
@@ -9,6 +10,7 @@ namespace GavranGame
         public string Name;
         public Vecto3Serializable Position;
         public bool IsEnable;
+        public List<BonusesObject> Bonuses = new List<BonusesObject>();
 
         public override string ToString()
         {
@@ -38,6 +40,21 @@ namespace GavranGame
         public static implicit operator Vecto3Serializable(Vector3 value)
         {
             return new Vecto3Serializable(value.x, value.y, value.z);
+        }
+    }
+
+    [Serializable]
+    public struct BonusesObject
+    {
+        public string nameBonus;
+        public bool meshBonus;
+        public bool colliderBonus;
+
+        public BonusesObject(string nameBonus, bool meshBonus, bool colliderBonus)
+        {
+            this.nameBonus = nameBonus;
+            this.meshBonus = meshBonus;
+            this.colliderBonus = colliderBonus;
         }
     }
 }

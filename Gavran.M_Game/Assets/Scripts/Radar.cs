@@ -6,13 +6,13 @@ namespace GavranGame
 {
      public sealed class Radar : MonoBehaviour
    {
-      private Transform _playerPos; // Позиция главного героя
+      private Transform _playerPos; 
       private readonly float _mapScale = 2;
       public static List<RadarObject> RadObjects = new List<RadarObject>();
       
       private void Start()
       {
-         _playerPos = Camera.main.transform;
+         _playerPos = FindObjectOfType<PlayerBall>().transform;
       }
       
       private void Update()
@@ -45,7 +45,7 @@ namespace GavranGame
          RadObjects.AddRange(newList);
       }
       
-      private void DrawRadarDots() // Синхронизирует значки на миникарте с реальными объектами
+      private void DrawRadarDots() 
       {
          foreach (RadarObject radObject in RadObjects)
          {

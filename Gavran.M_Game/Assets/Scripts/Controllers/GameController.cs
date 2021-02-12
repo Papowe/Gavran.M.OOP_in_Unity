@@ -8,8 +8,8 @@ using UnityEngine.UI;
 namespace GavranGame
 {
     public sealed class GameController : MonoBehaviour, IDisposable
-    {
-        public PlayerType PlayerType = PlayerType.Ball;
+    { 
+       public PlayerType PlayerType = PlayerType.Ball;
        private ListExecuteObject _interactiveObject;
        private DisplayEndGame _displayEndGame;
        private DisplayWinGame _displayWinGame;
