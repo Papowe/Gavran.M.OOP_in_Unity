@@ -20,7 +20,10 @@ namespace GavranGame
 
         public void GenerateColor()
         {
-            GetComponent<Renderer>().material.color = Random.ColorHSV();
+            if (TryGetComponent(out Renderer renderer))
+            {
+                renderer.sharedMaterial.color = Random.ColorHSV();
+            }
         }
 
         public void AddNeedComponent()
@@ -31,7 +34,8 @@ namespace GavranGame
             }
             
             gameObject.AddComponent<Rigidbody>();
-            gameObject.AddComponent<MeshRenderer>();
+            var mesh = gameObject.AddComponent<MeshRenderer>();
+            mesh.material = new Material(Shader.Find("Standard"));
         }
 
         public void RemoveComponent()
