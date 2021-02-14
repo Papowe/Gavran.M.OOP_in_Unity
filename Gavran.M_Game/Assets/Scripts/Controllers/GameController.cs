@@ -19,7 +19,7 @@ namespace GavranGame
        private InputController _inputController;
        private ListGoodBonuses _listGoodBonuses;
        private PositionController _positionController;
-       PlayerBase _player;
+       private PlayerBase _player;
        private int _countBonuses;
 
        private void Awake()

@@ -30,9 +30,8 @@ namespace GavranGame.Editor
             
             _prefabObject = EditorGUILayout.ObjectField(_prefabObject, typeof(GameObject), true) as GameObject;
             _positionObject = EditorGUILayout.Vector3Field("Position Object", _positionObject);
-            
             EditorGUILayout.LabelField("Scale Object");
-            _scale = EditorGUILayout.Slider(_scale, 1, 100);
+            _scale = EditorGUILayout.Slider(_scale, 1, 10);
             _nameObject = EditorGUILayout.TextField("Object Name: ", _nameObject);
             _isToogleAddRb = EditorGUILayout.Toggle("Add rigidbody", _isToogleAddRb);
             _materialColor = EditorGUILayout.ColorField("Color Object", _materialColor);
@@ -42,36 +41,34 @@ namespace GavranGame.Editor
                 EditorGUILayout.HelpBox(_messageWarning, MessageType.Warning);
             }
 
-            if (_isButtonCreate)
+            if (!_isButtonCreate) return;
+            if (_prefabObject)
             {
-                if (_prefabObject)
+                if (_nameObject != String.Empty)
                 {
-                    if (_nameObject != String.Empty)
+                    var gameObject = Instantiate(_prefabObject,_positionObject,Quaternion.identity);
+                    gameObject.name = _nameObject;
+                    gameObject.transform.localScale = new Vector3(_scale, _scale, _scale);
+                    gameObject.GetComponent<Renderer>().sharedMaterial.color = _materialColor;
+                    if (_isToogleAddRb)
                     {
-                        var gameObject = Instantiate(_prefabObject,_positionObject,Quaternion.identity);
-                        gameObject.name = _nameObject;
-                        gameObject.transform.localScale = new Vector3(_scale, _scale, _scale);
-                        gameObject.GetComponent<Renderer>().sharedMaterial.color = _materialColor;
-                        if (_isToogleAddRb)
+                        if (!gameObject.TryGetComponent(out Rigidbody rigidbody))
                         {
-                            if (!gameObject.TryGetComponent(out Rigidbody rigidbody))
-                            {
-                                gameObject.AddComponent<Rigidbody>();
-                            }
+                            gameObject.AddComponent<Rigidbody>();
                         }
-                        _isWarning = false;
                     }
-                    else
-                    {
-                        _messageWarning = "Нужно добавить имя объекту";
-                        _isWarning = true;
-                    }
+                    _isWarning = false;
                 }
                 else
                 {
-                    _messageWarning = "Нужно добавить обєкт в поле";
+                    _messageWarning = "Нужно добавить имя объекту";
                     _isWarning = true;
                 }
+            }
+            else
+            {
+                _messageWarning = "Нужно добавить обєкт в поле";
+                _isWarning = true;
             }
 
         }
