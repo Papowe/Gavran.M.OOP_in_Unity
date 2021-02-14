@@ -19,8 +19,8 @@ namespace GavranGame.Editor
             
             EditorGUILayout.Space(20);
 
-            GUI.color = Color.red;
             GUI.backgroundColor = Color.black;
+            GUI.contentColor = Color.red;
             if (GUILayout.Button("Сбросить трансформ"))
             {
                 figure.ResrtTransform();
@@ -29,6 +29,8 @@ namespace GavranGame.Editor
             
             EditorGUILayout.Space(offset);
             
+            GUI.backgroundColor = Color.red;
+            GUI.contentColor = Color.white;
             if (GUILayout.Button("Сгенерировать цвет"))
             {
                 figure.GenerateColor();
@@ -36,6 +38,8 @@ namespace GavranGame.Editor
             
             EditorGUILayout.Space(offset);
             
+            GUI.backgroundColor = Color.yellow;
+            GUI.contentColor = Color.green;
             if (GUILayout.Button("Добавить нужные компоненты"))
             {
                 figure.AddNeedComponent();
@@ -43,6 +47,8 @@ namespace GavranGame.Editor
             
             EditorGUILayout.Space(offset);
             
+            GUI.backgroundColor = Color.blue;
+            GUI.contentColor = Color.yellow;
             if (GUILayout.Button("Удалить компоненты"))
             {
                 figure.RemoveComponent();

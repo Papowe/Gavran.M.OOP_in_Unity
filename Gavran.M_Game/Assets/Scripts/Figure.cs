@@ -34,8 +34,12 @@ namespace GavranGame
             }
             
             gameObject.AddComponent<Rigidbody>();
-            var mesh = gameObject.AddComponent<MeshRenderer>();
-            mesh.material = new Material(Shader.Find("Standard"));
+
+            if (!TryGetComponent(out MeshRenderer meshRenderer))
+            {
+                var mesh = gameObject.AddComponent<MeshRenderer>();
+                mesh.material = new Material(Shader.Find("Standard"));
+            }
         }
 
         public void RemoveComponent()
