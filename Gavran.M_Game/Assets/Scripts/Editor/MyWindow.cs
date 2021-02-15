@@ -49,7 +49,10 @@ namespace GavranGame.Editor
                     var gameObject = Instantiate(_prefabObject,_positionObject,Quaternion.identity);
                     gameObject.name = _nameObject;
                     gameObject.transform.localScale = new Vector3(_scale, _scale, _scale);
-                    gameObject.GetComponent<Renderer>().sharedMaterial.color = _materialColor;
+                    Renderer renderer = gameObject.GetComponent<Renderer>();
+                    renderer.material = new Material(Shader.Find("Standard"));
+                    renderer.sharedMaterial.color = _materialColor;
+                       
                     if (_isToogleAddRb)
                     {
                         if (!gameObject.TryGetComponent(out Rigidbody rigidbody))
