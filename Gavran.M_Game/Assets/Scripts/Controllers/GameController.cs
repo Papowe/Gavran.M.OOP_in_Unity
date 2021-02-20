@@ -8,8 +8,8 @@ using UnityEngine.UI;
 namespace GavranGame
 {
     public sealed class GameController : MonoBehaviour, IDisposable
-    {
-        public PlayerType PlayerType = PlayerType.Ball;
+    { 
+       public PlayerType PlayerType = PlayerType.Ball;
        private ListExecuteObject _interactiveObject;
        private DisplayEndGame _displayEndGame;
        private DisplayWinGame _displayWinGame;
@@ -18,9 +18,8 @@ namespace GavranGame
        private CameraController _cameraController;
        private InputController _inputController;
        private ListGoodBonuses _listGoodBonuses;
-       private BafController _bafController;
        private PositionController _positionController;
-       PlayerBase _player = null;
+       private PlayerBase _player;
        private int _countBonuses;
 
        private void Awake()
@@ -31,7 +30,6 @@ namespace GavranGame
            _displayEndGame = new DisplayEndGame(_refeerence.EndGame);
            _displayWinGame = new DisplayWinGame(_refeerence.WinGame, _refeerence.RestartButton);
            _displayBonuses = new DisplayBonuses(_refeerence.Bonuse);
-           _bafController = new BafController();
            
            if (PlayerType == PlayerType.Ball)
            {
@@ -85,7 +83,6 @@ namespace GavranGame
 
        private void AddBonuse(int value)
        {    
-           _bafController.RabdomBaf.Baf(_player);
            _countBonuses += value;
            _displayBonuses.Display(_countBonuses);
            _listGoodBonuses.CaughtBonus();
