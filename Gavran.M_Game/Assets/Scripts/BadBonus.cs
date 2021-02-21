@@ -21,11 +21,11 @@ namespace GavranGame
             OnCaughtPlayerChange?.Invoke(gameObject.name, _color);
         }
 
-        public override void Execute()
+        public override void Execute(float deltaTime)
         {
             if(!IsInteractable) return;
             Fly();
-            Rotation();
+            Rotation(deltaTime);
         }
 
         public void Fly()
@@ -35,9 +35,9 @@ namespace GavranGame
                 transform.localPosition.z);
         }
 
-        public void Rotation()
+        public void Rotation(float deltaTime)
         {
-            transform.Rotate(Vector3.up * (Time.deltaTime * _speedRotation),Space.World);        
+            transform.Rotate(Vector3.up * (deltaTime * _speedRotation),Space.World);        
         }
     }
 }

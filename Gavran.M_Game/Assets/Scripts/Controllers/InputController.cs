@@ -21,7 +21,7 @@ namespace GavranGame
             goodBonusList = GameObject.FindObjectsOfType<GoodBonus>().ToList();
         }
 
-        public void Execute()
+        public void Execute(float deltaTime)
         {
             if(!_playerBase.isFloor) return;
             _playerBase.Move(Input.GetAxis(AxisManager.HORIZONTAL), 0,Input.GetAxis(AxisManager.VERTICAL));

@@ -72,6 +72,7 @@ namespace GavranGame
        
        private void Update()
        {
+           float deltaTime = Time.deltaTime;
            for (int i = 0; i < _interactiveObject.Length; i++)
            {
                var interactiveObject = _interactiveObject[i];
@@ -80,7 +81,7 @@ namespace GavranGame
                {
                    continue;
                }
-               interactiveObject.Execute();
+               interactiveObject.Execute(deltaTime);
            }
        }
 

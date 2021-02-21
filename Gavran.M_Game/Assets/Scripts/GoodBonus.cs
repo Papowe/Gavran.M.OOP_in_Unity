@@ -26,7 +26,7 @@ namespace GavranGame
             OnPointChange(Point);
         }
 
-        public override void Execute()
+        public override void Execute(float deltaTime)
         {
             if(!IsInteractable) return;
             Fly();
