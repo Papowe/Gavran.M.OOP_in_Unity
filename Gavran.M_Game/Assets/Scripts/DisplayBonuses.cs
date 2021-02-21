@@ -9,16 +9,26 @@ namespace GavranGame
     public sealed class DisplayBonuses
     {
         private Text _bonuseLable;
+        private ListGoodBonuses _listGoodBonuses;
+        private int _countBonuses;
 
-        public DisplayBonuses(GameObject bonus)
+        public DisplayBonuses(Refeerence refeerence, ListGoodBonuses listGoodBonuses)
         {
-            _bonuseLable = bonus.GetComponentInChildren<Text>();
+            _listGoodBonuses = listGoodBonuses;
+            _bonuseLable = refeerence.Bonuse.GetComponentInChildren<Text>();
             _bonuseLable.text = $"Вы набрали 0";
         }
 
         public void Display(int value)
         {
             _bonuseLable.text = $"Вы набрали {value}";
+        }
+        
+        public void AddBonuse(int value)
+        {    
+            _countBonuses += value;
+            Display(_countBonuses);
+            _listGoodBonuses.CaughtBonus();
         }
     }
 }
