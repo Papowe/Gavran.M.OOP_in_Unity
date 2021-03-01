@@ -12,7 +12,7 @@ namespace GavranGame
             this.player = player;
         }
 
-        public void Execute()
+        public void Execute(float deltaTime)
         {
             if (player.transform.position.y < -10)
             {

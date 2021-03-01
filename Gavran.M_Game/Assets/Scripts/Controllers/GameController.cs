@@ -19,17 +19,18 @@ namespace GavranGame
        private InputController _inputController;
        private ListGoodBonuses _listGoodBonuses;
        private PositionController _positionController;
+       private LeavelController _leavelController;
        private PlayerBase _player;
-       private int _countBonuses;
 
        private void Awake()
        {
            _refeerence = new Refeerence();
+           _leavelController = new LeavelController();
            _interactiveObject = new ListExecuteObject();
            _listGoodBonuses = new ListGoodBonuses(_interactiveObject);
-           _displayEndGame = new DisplayEndGame(_refeerence.EndGame);
+           _displayEndGame = new DisplayEndGame(_refeerence);
            _displayWinGame = new DisplayWinGame(_refeerence.WinGame, _refeerence.RestartButton);
-           _displayBonuses = new DisplayBonuses(_refeerence.Bonuse);
+           _displayBonuses = new DisplayBonuses(_refeerence, _listGoodBonuses);
            
            if (PlayerType == PlayerType.Ball)
            {
@@ -38,7 +39,7 @@ namespace GavranGame
             
            _positionController = new PositionController(_player);
            _interactiveObject.AddExecuteObject(_positionController);
-           _positionController.OutsideMap += RestartGame;
+           _positionController.OutsideMap += _leavelController.RestartGame;
            
            _cameraController = new CameraController(_player.transform,_refeerence.MainCamera.transform);
            _interactiveObject.AddExecuteObject(_cameraController);
@@ -53,43 +54,25 @@ namespace GavranGame
            {
                if (o is BadBonus badBonus)
                {
-                   badBonus.OnCaughtPlayerChange += CaughtPlayer;
+                   badBonus.OnCaughtPlayerChange += _displayEndGame.CaughtPlayer;
                    badBonus.OnCaughtPlayerChange += _displayEndGame.GameOver;
                }
 
                if (o is GoodBonus goodBonus)
                {
-                   goodBonus.OnPointChange += AddBonuse;
+                   goodBonus.OnPointChange += _displayBonuses.AddBonuse;
                }
            }
 
            _listGoodBonuses.BonusesCollected += _displayWinGame.WinPanel;
            
-           _refeerence.RestartButton.onClick.AddListener(RestartGame);
+           _refeerence.RestartButton.onClick.AddListener(_leavelController.RestartGame);
            _refeerence.RestartButton.gameObject.SetActive(false);
        }
-
-       private void RestartGame()
-       {
-           SceneManager.LoadScene(0);
-           Time.timeScale = 1;
-       }
        
-       private void CaughtPlayer(string value, Color args)
-       {
-           _refeerence.RestartButton.gameObject.SetActive(true);
-           Time.timeScale = 0;
-       }
-
-       private void AddBonuse(int value)
-       {    
-           _countBonuses += value;
-           _displayBonuses.Display(_countBonuses);
-           _listGoodBonuses.CaughtBonus();
-       }
-
        private void Update()
        {
+           float deltaTime = Time.deltaTime;
            for (int i = 0; i < _interactiveObject.Length; i++)
            {
                var interactiveObject = _interactiveObject[i];
@@ -98,7 +81,7 @@ namespace GavranGame
                {
                    continue;
                }
-               interactiveObject.Execute();
+               interactiveObject.Execute(deltaTime);
            }
        }
 
@@ -109,16 +92,16 @@ namespace GavranGame
                switch (o)
                {
                    case BadBonus badBonus:
-                       badBonus.OnCaughtPlayerChange -= CaughtPlayer;
+                       badBonus.OnCaughtPlayerChange -= _displayEndGame.CaughtPlayer;
                        badBonus.OnCaughtPlayerChange -= _displayEndGame.GameOver;
                        break;
                    case GoodBonus goodBonus:
-                       goodBonus.OnPointChange -= AddBonuse;
+                       goodBonus.OnPointChange -= _displayBonuses.AddBonuse;
                        break;
                }
            }
            
-           _positionController.OutsideMap += RestartGame;
+           _positionController.OutsideMap += _leavelController.RestartGame;
            _listGoodBonuses.BonusesCollected -= _displayWinGame.WinPanel;
        }
     }

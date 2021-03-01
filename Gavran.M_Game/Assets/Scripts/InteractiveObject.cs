@@ -28,7 +28,7 @@ namespace GavranGame
         }
 
         protected abstract void Interaction();
-        public abstract void Execute();
+        public abstract void Execute(float deltaTime);
 
         private void Start()
         {
